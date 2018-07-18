@@ -1,7 +1,11 @@
-module V1
+# module V1
   class UsersController < ApplicationController
     def index
       render json: User.all
+    end
+
+    def new
+
     end
   
     def show
@@ -11,7 +15,7 @@ module V1
   
     def create
       
-    new_user = User.create()
+    new_user = User.create(user_params)
       render json: new_user
     end
   
@@ -31,4 +35,4 @@ module V1
       params.require(:user).permit(:name, :email)
     end
   end
-end
+# end
