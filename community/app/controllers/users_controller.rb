@@ -5,7 +5,7 @@
     end
 
     def new
-
+      @user = User.new
     end
   
     def show
@@ -14,9 +14,14 @@
     end
   
     def create
-      
-    new_user = User.create(user_params)
-      render json: new_user
+      # :users
+    @user = User.new(user_params)
+      if @user.save
+        redirect_to 'http://localhost:3001/'
+      else
+        render 'new'
+      # render json: new_user
+      end
     end
   
     def destroy
@@ -30,9 +35,9 @@
     end
   
     private
+      def user_params
+        params.require(:user).permit(:name, :email, :password, :password_confirmation)
+      end
   
-    def user_params
-      params.require(:user).permit(:name, :email)
-    end
   end
 # end
