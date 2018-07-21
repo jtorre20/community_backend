@@ -1,6 +1,6 @@
 # module V1
   class UsersController < ApplicationController
-    skip_before_action :verify_authenticity_token, :only => [:create]
+    skip_before_action :verify_authenticity_token, :only => [:create, :show]
     def index
       render json: User.all
     end
@@ -10,8 +10,12 @@
     end
   
     def show
-      user = User.find(params[:id])
-      render json: user
+      
+      user = User.find_by(email: params[:email])
+      if user.authenticate(params[:password])
+        token = Auth.issue({user_id: user.id})
+        render json: {user: token, status: "success"}
+      end
     end
   
     def create
