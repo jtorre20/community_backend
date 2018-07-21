@@ -25,10 +25,17 @@ ActiveRecord::Schema.define(version: 2018_07_17_193359) do
   create_table "moods", force: :cascade do |t|
     t.integer "user_id"
     t.datetime "time"
+    t.text "input"
     t.string "category"
     t.string "intensity"
-    t.string "location"
-    t.string "impact"
+    t.float "anger"
+    t.float "calmness"
+    t.float "fear"
+    t.float "happiness"
+    t.float "liking"
+    t.float "shame"
+    t.float "certainty"
+    t.float "surprise"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

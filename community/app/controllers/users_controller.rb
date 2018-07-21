@@ -1,5 +1,6 @@
 # module V1
   class UsersController < ApplicationController
+    skip_before_action :verify_authenticity_token, :only => [:create]
     def index
       render json: User.all
     end
@@ -15,12 +16,14 @@
   
     def create
       # :users
+      # byebug
     @user = User.new(user_params)
       if @user.save
-        redirect_to 'http://localhost:3001/'
+        token = Auth.issue({user_id: @user.id})
+        render json: {user: token, status: "success"}
+      
       else
         render 'new'
-      # render json: new_user
       end
     end
   
@@ -36,7 +39,7 @@
   
     private
       def user_params
-        params.require(:user).permit(:name, :email, :password, :password_confirmation)
+        params.permit(:name, :email, :password, :password_confirmation)
       end
   
   end

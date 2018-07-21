@@ -30,11 +30,11 @@ module V1
     private
   
     def mood_params
-      params.require(:mood).permit(:user_id, :time,
+      params.require(:mood).permit(:token, :time,
           :category,
           :intensity,
-          :location,
-          :impact)
+          :input
+          )
     end
   end
 end
