@@ -11,7 +11,7 @@ module V1
     end
   
     def create
-      
+      RestClient.post(url,{text:"this is testdata tothe api"}, {"X-AYLIEN-TextAPI-Application-Key": "73ead8b493c2bff21192d56d9709a188", "X-AYLIEN-TextAPI-Application-ID": "3d781275", "Content-Type": "application/json",Accept: "application/json"})
    
     new_mood = Mood.create()
       render json: new_mood
