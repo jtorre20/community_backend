@@ -14,9 +14,10 @@
     def create
       url = "https://api.aylien.com/api/v1/sentiment"
       new_mood = Mood.create(mood_params)
-      # byebug
       result = RestClient.post(url,{mode:params[:mode], language:params[:language], text:params[:text]}, {"X-AYLIEN-TextAPI-Application-Key": "73ead8b493c2bff21192d56d9709a188", "X-AYLIEN-TextAPI-Application-ID": "3d781275", "Content-Type": "application/json",Accept: "application/json"})
-      render json: {mood: result}
+      # byebug
+      parsed_result = JSON.parse(result)
+      render json: {mood: parsed_result}
     end
   
     def destroy
@@ -32,7 +33,6 @@
     private
   
     def mood_params
-      # user_id = Auth.decode(params[:user_id])["user_id"]
         {:user_id => Auth.decode(params[:user_id])["user_id"], 
           :text => params[:text], 
           :mood => params[:mood], 
