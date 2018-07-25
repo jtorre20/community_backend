@@ -13,7 +13,7 @@
       
       user = User.find_by(email: params[:email])
       if user.authenticate(params[:password])
-        token = Auth.issue({user_id: user.id})
+        token = Auth.issue({user: user.id})
         render json: {user: token, status: "success"}
       end
     end
@@ -23,7 +23,7 @@
       # byebug
     @user = User.new(user_params)
       if @user.save
-        token = Auth.issue({user_id: @user.id})
+        token = Auth.issue({user: @user.id})
         render json: {user: token, status: "success"}
       
       else
