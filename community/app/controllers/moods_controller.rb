@@ -1,5 +1,6 @@
-module V1
+
   class MoodsController < ApplicationController
+    skip_before_action :verify_authenticity_token, :only => [:create, :show]
 
     def index
       render json: Mood.all
@@ -11,10 +12,12 @@ module V1
     end
   
     def create
-      
-   
-    new_mood = Mood.create()
-      render json: new_mood
+      url = "https://api.aylien.com/api/v1/sentiment"
+      new_mood = Mood.create(mood_params)
+      result = RestClient.post(url,{mode:params[:mode], language:params[:language], text:params[:text]}, {"X-AYLIEN-TextAPI-Application-Key": "73ead8b493c2bff21192d56d9709a188", "X-AYLIEN-TextAPI-Application-ID": "3d781275", "Content-Type": "application/json",Accept: "application/json"})
+      # byebug
+      parsed_result = JSON.parse(result)
+      render json: {mood: parsed_result}
     end
   
     def destroy
@@ -30,11 +33,13 @@ module V1
     private
   
     def mood_params
-      params.require(:mood).permit(:token, :time,
-          :category,
-          :intensity,
-          :input
-          )
+        {:user_id => Auth.decode(params[:user_id])["user_id"], 
+          :text => params[:text], 
+          :mood => params[:mood], 
+          :language => params[:language],
+          :mode => params[:mode],
+          :time => params[:time]
+        }
+          
     end
   end
-end

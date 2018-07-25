@@ -19,8 +19,6 @@
     end
   
     def create
-      # :users
-      # byebug
     @user = User.new(user_params)
       if @user.save
         token = Auth.issue({user_id: @user.id})
@@ -43,7 +41,7 @@
   
     private
       def user_params
-        params.permit(:name, :email, :password, :password_confirmation)
+        params.permit(:username, :email, :password, :password_confirmation)
       end
   
   end
