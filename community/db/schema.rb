@@ -24,10 +24,10 @@ ActiveRecord::Schema.define(version: 2018_07_17_193359) do
 
   create_table "moods", force: :cascade do |t|
     t.integer "user_id"
-    t.integer "user"
     t.datetime "time"
     t.text "text"
     t.string "mood"
+    t.integer "intensity"
     t.string "language"
     t.string "mode"
     t.datetime "created_at", null: false
