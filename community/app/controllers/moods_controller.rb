@@ -13,6 +13,10 @@
   
     def create
       url = "https://api.aylien.com/api/v1/sentiment"
+      # if !mood_params.empty?
+      #   new_mood = Mood.new(mood_params)
+      #   new_mood.save
+      # end
       new_mood = Mood.create(mood_params)
       result = RestClient.post(url,{mode:params[:mode], language:params[:language], text:params[:text]}, {"X-AYLIEN-TextAPI-Application-Key": "73ead8b493c2bff21192d56d9709a188", "X-AYLIEN-TextAPI-Application-ID": "3d781275", "Content-Type": "application/json",Accept: "application/json"})
       parsed_result = JSON.parse(result)
