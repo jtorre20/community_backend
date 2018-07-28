@@ -12,16 +12,11 @@
     end
   
     def create
-      url = "https://api.aylien.com/api/v1/sentiment"
-      # if !mood_params.empty?
-      #   new_mood = Mood.new(mood_params)
-      #   new_mood.save
-      # end
       new_mood = Mood.create(mood_params)
-      result = RestClient.post(url,{mode:params[:mode], language:params[:language], text:params[:text]}, {"X-AYLIEN-TextAPI-Application-Key": "73ead8b493c2bff21192d56d9709a188", "X-AYLIEN-TextAPI-Application-ID": "3d781275", "Content-Type": "application/json",Accept: "application/json"})
-      parsed_result = JSON.parse(result)
+      # result = JSON.parse(new_mood)
       # byebug
-      render json: {text: parsed_result}
+      render json: {moods: new_mood}
+      
     end
   
     def destroy
@@ -37,12 +32,17 @@
     private
   
     def mood_params
+      mood_object = 
+        {anger: params[:mood]['anger'], 
+          fear: params[:mood]['fear'],
+        disgust: params[:mood]['disgust'],
+        happiness: params[:mood]['happiness'], 
+        surprise: params[:mood]['surprise'],
+        sadness: params[:mood]['sadness'], 
+        contempt: params[:mood]['contempt']}
+        
         {:user_id => Auth.decode(params[:user_id])["user_id"], 
-          :text => params[:text], 
-          :mood => params[:mood],
-          :intensity => params[:intensity], 
-          :language => params[:language],
-          :mode => params[:mode],
+          :mood => mood_object, 
           :time => params[:time]
         }
           
