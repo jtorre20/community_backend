@@ -1,6 +1,7 @@
 class User < ApplicationRecord
 
   has_many :moods
+  has_many :text
   has_many :goals
   has_secure_password
 
