@@ -1,6 +1,6 @@
 
   class MoodsController < ApplicationController
-    skip_before_action :verify_authenticity_token, :only => [:create, :show]
+    skip_before_action :verify_authenticity_token, :only => [:create, :show, :find]
 
     def index
       render json: Mood.all
@@ -17,6 +17,26 @@
       # byebug
       render json: {moods: new_mood}
       
+    end
+
+    def find
+      user = User.find(find_params)
+      moods_arr = user.moods
+      mood_obj = {}
+      moods_arr.each do |mood|
+        mood_date = "#{mood[:time].year}/#{mood[:time].month}/#{mood[:time].day}"
+        # mood_time = mo
+        if mood_obj[mood_date]
+          mood_obj[mood_date].push({id: mood.id, hour: mood_time})
+          # key already exists
+          # the value of key is an array
+          # push this mood's id into the array at this  key
+        else
+          mood_obj[mood_date] = [mood.id]
+
+        end
+
+        #render obj
     end
   
     def destroy
@@ -46,5 +66,9 @@
           :time => params[:time]
         }
           
+    end
+
+    def find_params
+      {:user_id => Auth.decode(params[:user_id])["user_id"]}
     end
   end

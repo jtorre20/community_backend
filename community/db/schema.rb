@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2018_07_28_193954) do
   create_table "moods", force: :cascade do |t|
     t.integer "user_id"
     t.datetime "time"
-    t.string "mood"
+    t.json "mood"
     t.integer "intensity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

@@ -3,7 +3,7 @@ class CreateMoods < ActiveRecord::Migration[5.2]
     create_table :moods do |t|
       t.integer :user_id
       t.datetime :time
-      t.string :mood
+      t.json :mood
       t.integer :intensity
 
       t.timestamps

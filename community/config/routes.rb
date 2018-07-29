@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get  '/signup',  to: 'users#new'
   post '/signup',  to: 'users#create'
   post '/users/username', to: 'users#show'
+  post '/moodentry', to: 'moods#find'
   # post '/text', to: 'text#create'
 
   
