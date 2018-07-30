@@ -20,23 +20,27 @@
     end
 
     def find
-      user = User.find(find_params)
+      user = User.find(find_params[:user_id])
+      
       moods_arr = user.moods
       mood_obj = {}
       moods_arr.each do |mood|
+        # byebug
         mood_date = "#{mood[:time].year}/#{mood[:time].month}/#{mood[:time].day}"
-        # mood_time = mo
+        mood_time = "#{mood[:time].to_s.split(" ")[1]}"
+        # byebug
         if mood_obj[mood_date]
           mood_obj[mood_date].push({id: mood.id, hour: mood_time})
           # key already exists
           # the value of key is an array
           # push this mood's id into the array at this  key
         else
-          mood_obj[mood_date] = [mood.id]
+          mood_obj[mood_date] = [{id: mood.id, hour: mood_time}]
 
         end
+      end
 
-        #render obj
+        render json: mood_obj
     end
   
     def destroy
