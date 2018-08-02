@@ -15,6 +15,8 @@
       if user.authenticate(params[:password])
         token = Auth.issue({user_id: user.id})
         render json: {user: token, status: "success"}
+      # else 
+        # render {status: "failure"}
       end
     end
   
@@ -24,8 +26,8 @@
         token = Auth.issue({user_id: @user.id})
         render json: {user: token, status: "success"}
       
-      else
-        render 'new'
+      # else
+      #   render {status: "failure"}
       end
     end
   

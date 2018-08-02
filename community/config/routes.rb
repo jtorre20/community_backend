@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   post '/signup',  to: 'users#create'
   post '/users/username', to: 'users#show'
   post '/moodentry', to: 'moods#find'
+  get '/moodentry', to: 'moods#index'
   # post '/text', to: 'text#create'
 
   
